@@ -3,17 +3,17 @@ param (
     [Parameter(Mandatory = $true)]
     [string]
     $Location,
-    [Parameter(Mandatory = $false)]
-    [string]
-    $SubscriptionId = "",
     [Parameter(Mandatory = $true)]
     [string]
-    $ResourceGroupName
-
+    $ResourceGroupName,
+    [Parameter(Mandatory = $false)]
+    [string]
+    $SubscriptionId = ""
 )
+
 # Check subscription
 if ($SubscriptionId -ne "") {
-    az account set -s $SubscriptionId
+    az account set --subscription $SubscriptionId
     if (!$?) { 
         Write-Error "Unable to select $SubscriptionId as the active subscription."
         exit 1
