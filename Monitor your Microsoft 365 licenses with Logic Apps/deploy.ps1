@@ -43,7 +43,7 @@ $me = az ad signed-in-user show | ConvertFrom-Json
 $roleAssignments = az role assignment list --all --assignee $me.id --query "[?resourceGroup=='$ResourceGroupName' && roleDefinitionName=='Contributor'].roleDefinitionName" | ConvertFrom-Json
 if ($roleAssignments.Count -eq 0) {
     Write-Host "Current user does not have contributor permissions to $ResourceGroupName resource group, attempting to assign contributor permissions"
-    az role assignment create --assignee $me.id --role contributor --resource-group $ResourceGroupName
+    az role assignment create --assignee $me.id --role contributor --resource-group $ResourceGroupName --scope "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName"
 }
 
 $DeployTimestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMdTHmZ")
